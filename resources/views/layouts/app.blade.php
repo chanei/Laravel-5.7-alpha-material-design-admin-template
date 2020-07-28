@@ -1,80 +1,64 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<!-- head-->
+    <head>
+        <!-- Title -->
+        <title>Alpha | @yield('pagename')</title>
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta charset="UTF-8">
+        <meta name="description" content="Responsive Admin Dashboard Template" />
+        <meta name="keywords" content="admin,dashboard" />
+        <meta name="author" content="Steelcoders" />
+        <!-- Styles -->
+        <link type="text/css" rel="stylesheet" href="{{ asset('source/assets/plugins/materialize/css/materialize.min.css') }}"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{{ asset('source/assets/plugins/metrojs/MetroJs.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('source/assets/plugins/weather-icons-master/css/weather-icons.min.css') }}" rel="stylesheet">
+        <!-- Theme Styles -->
+        <link href="{{ asset('source/assets/css/alpha.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('source/assets/css/custom.css') }}" rel="stylesheet" type="text/css"/>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    </head>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+<!-- body -->
+    <body>
+        <div class="loader-bg"></div>
+        @include('layouts.loader')
+        <div class="mn-content fixed-sidebar">
+            @include('layouts.header')
+            @include('layouts.search-results')
+            @include('layouts.chat-sidebar')
+            @include('layouts.chat-messages')
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+            <!-- side bar menu code -->
+            @include('layouts.sidebar')
+            <main class="mn-inner inner-active-sidebar">
+              @yield('content')
+            </main>
+            @include('layouts.footer')
+        </div>
+        <div class="left-sidebar-hover"></div>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+        <!-- Javascripts -->
+        <script src="{{ asset('source/assets/plugins/jquery/jquery-2.2.0.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/materialize/js/materialize.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/material-preloader/js/materialPreloader.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/jquery-blockui/jquery.blockui.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/waypoints/jquery.waypoints.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/counter-up-master/jquery.counterup.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/chart.js/chart.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/flot/jquery.flot.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/flot/jquery.flot.time.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/flot/jquery.flot.symbol.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/flot/jquery.flot.resize.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/curvedlines/curvedLines.js') }}"></script>
+        <script src="{{ asset('source/assets/plugins/peity/jquery.peity.min.js') }}"></script>
+        <script src="{{ asset('source/assets/js/alpha.min.js') }}"></script>
+        <script src="{{ asset('source/assets/js/pages/dashboard.js') }}"></script>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-</body>
+    </body>
 </html>
